@@ -12,16 +12,7 @@ import org.springframework.context.annotation.PropertySources;
 import org.springframework.core.env.Environment;
 
 @Configuration
-//@PropertySource({"classpath:datasource.properties","classpath:jsm.properties"})
-@PropertySources({
-        @PropertySource("classpath:datasource.properties"),
-        @PropertySource("classpath:jsm.properties")
-})
 public class PropertiesConfig {
-
-    @Autowired
-    Environment ev;
-
     @Value("${neeraj.jsm.username}")
     private String jsmUserName;
     @Value("${neeraj.jsm.userpass}")
@@ -40,8 +31,7 @@ public class PropertiesConfig {
     @Bean
     public FakeDataSource doFakeDataSource(){
         FakeDataSource fakeDataSource = new FakeDataSource();
-        fakeDataSource.setUserName(ev.getProperty("USERNAME"));
-       // fakeDataSource.setUserName(userName);
+        fakeDataSource.setUserName(userName);
         fakeDataSource.setUserPassword(userPassword);
         fakeDataSource.setUrl(url);
         return fakeDataSource;
@@ -54,12 +44,6 @@ public class PropertiesConfig {
         fakeJsmDataSource.setUserPassword(jsmUserPassword);
         fakeJsmDataSource.setUserUrl(jsmUrl);
         return fakeJsmDataSource;
-    }
-
-    @Bean
-    public static PropertyPlaceholderAutoConfiguration properties(){
-        PropertyPlaceholderAutoConfiguration propertyPlaceholderAutoConfiguration = new PropertyPlaceholderAutoConfiguration();
-        return propertyPlaceholderAutoConfiguration;
     }
 
 }
